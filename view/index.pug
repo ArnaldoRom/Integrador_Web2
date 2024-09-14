@@ -2,10 +2,10 @@ extends layout
 
 block contenido
   form(id="formulario")
-    input(type="text", id="texto")
-    input(type="text", id="pais")
-    select(name="", id="departamentos") 
-    button(type="summit", id="boton") Enviar 
+    input(type="text", id="texto", placeholder="palabra clave")
+    input(type="text", id="pais", placeholder="localizacion")
+    select(name="departamentos", id="departamentos") 
+    button(type="submit", id="boton") Enviar 
 
   div(id="resultado", class= "card")
   div(id="paginas")
