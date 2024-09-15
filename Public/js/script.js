@@ -8,6 +8,7 @@ const botonPaginas = document.getElementById("paginas");
 const API_base = `https://collectionapi.metmuseum.org/public/collection/v1`;
 let paginaActual = 1;
 let ultimaBusquedaUrl = "";
+let objetosBusqueda = [];
 
 async function obtenerDepartamentos() {
   const response = await fetch(`/departments`);
@@ -24,13 +25,13 @@ async function obtenerDepartamentos() {
 async function crearBusqueda(event) {
   event.preventDefault();
 
-  let conImg = `${API_base}/search?hasImages=true`;
   const idDepto = lista.value;
   const texto = palabra.value.trim();
   const localizacion = pais.value.trim();
 
-  if (idDepto) conImg += `&department=${idDepto}`;
-  if (texto) conImg += `&q=${texto}`;
+  let conImg = `${API_base}/search?q=${texto || ""}&hasImages=true`;
+
+  if (idDepto) conImg += `&departmentId=${idDepto}`;
   if (localizacion) conImg += `&geoLocation=${localizacion}`;
 
   ultimaBusquedaUrl = conImg;
@@ -43,14 +44,22 @@ async function buscarApi(url) {
   const response = await fetch(url);
   const data = await response.json();
 
-  resultado.innerHTML = "";
-
   if (!data.objectIDs || data.objectIDs.length === 0) {
     resultado.innerHTML = "<p>No se encontraron resultados.</p>";
+    botonPaginas.innerHTML = "";
     return;
   }
 
-  const idsObjetos = data.objectIDs.slice(
+  objetosBusqueda = data.objectIDs;
+
+  paginasConObjetos();
+  paginacion(objetosBusqueda.length);
+}
+
+async function paginasConObjetos() {
+  resultado.innerHTML = "";
+
+  const idsObjetos = objetosBusqueda.slice(
     (paginaActual - 1) * 20,
     paginaActual * 20
   );
@@ -58,6 +67,7 @@ async function buscarApi(url) {
   for (const id of idsObjetos) {
     const responseObjeto = await fetch(`${API_base}/objects/${id}`);
     const objeto = await responseObjeto.json();
+
     const div = document.createElement(`div`);
     div.classList.add("resultados_contenedor");
 
@@ -83,13 +93,12 @@ async function buscarApi(url) {
     }
     resultado.appendChild(div);
   }
-  paginacion(data.objectIDs.length);
 }
 
-function paginacion(obejtosTotales) {
+function paginacion(objetosTotales) {
   botonPaginas.innerHTML = "";
 
-  const paginasTotales = Math.ceil(obejtosTotales / 20);
+  const paginasTotales = Math.ceil(objetosTotales / 20);
 
   for (let i = 1; i <= paginasTotales; i++) {
     const boton = document.createElement("button");
@@ -98,7 +107,7 @@ function paginacion(obejtosTotales) {
 
     boton.addEventListener("click", async () => {
       paginaActual = i;
-      await buscarApi(`${ultimaBusquedaUrl}&page=${i}`);
+      paginasConObjetos();
     });
     botonPaginas.appendChild(boton);
   }
