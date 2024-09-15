@@ -7,17 +7,19 @@ async function obtenerDepartamentos() {
   return data.departments;
 }
 
-async function buscarObjetos(dtos, palabra, loacalizacion, pagina = 1) {
-  let noImg = `${API_base}/search?hasImagen=true`;
+async function buscarObjetos(dtos, palabra, localizacion, pagina = 1) {
+  let urlBusqueda = `${API_base}/search?hasImages=true`;
 
-  if (dtos) noImg += `&departments=${dtos}`;
-  if (palabra) noImg += `&q=${palabra}`;
-  if (loacalizacion) noImg += `q=""&geoLocation=${loacalizacion}`;
+  if (dtos) urlBusqueda += `&departmentId=${dtos}`;
+  if (palabra) urlBusqueda += `&q=${palabra}`;
+  if (localizacion) urlBusqueda += `&geoLocation=${localizacion}`;
 
-  const response = await fetch(noImg);
+  const response = await fetch(urlBusqueda);
   const data = await response.json();
 
-  if (!data.objectIDs || data.objectIDs.length === 0) return [];
+  if (!data.objectIDs || data.objectIDs.length === 0) {
+    return [];
+  }
 
   const idsObjetos = data.objectIDs.slice((pagina - 1) * 20, pagina * 20);
   const objetos = await Promise.all(
