@@ -13,6 +13,7 @@ app.set("view engine", "pug");
 app.use(express.static(publicStatic));
 
 app.use(morgan("dev"));
+
 app.use(apiRouter);
 app.use(webRouter);
 

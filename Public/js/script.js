@@ -5,7 +5,6 @@ const palabra = document.getElementById("texto");
 const pais = document.getElementById("pais");
 const botonPaginas = document.getElementById("paginas");
 
-const API_base = `https://collectionapi.metmuseum.org/public/collection/v1`;
 let paginaActual = 1;
 let ultimaBusquedaUrl = "";
 let objetosBusqueda = [];
@@ -29,7 +28,7 @@ async function crearBusqueda(event) {
   const texto = palabra.value.trim();
   const localizacion = pais.value.trim();
 
-  let conImg = `${API_base}/search?q=${texto || ""}&hasImages=true`;
+  let conImg = `/search?q=${texto || ""}&hasImages=true`;
 
   if (idDepto) conImg += `&departmentId=${idDepto}`;
   if (localizacion) conImg += `&geoLocation=${localizacion}`;
@@ -37,22 +36,22 @@ async function crearBusqueda(event) {
   ultimaBusquedaUrl = conImg;
   paginaActual = 1;
 
-  await buscarApi(conImg);
+  await buscarApi(ultimaBusquedaUrl);
 }
 
 async function buscarApi(url) {
   const response = await fetch(url);
   const data = await response.json();
 
-  if (!data.objectIDs || data.objectIDs.length === 0) {
+  if (!Array.isArray(data) || data.length === 0) {
     resultado.innerHTML = "<p>No se encontraron resultados.</p>";
     botonPaginas.innerHTML = "";
     return;
   }
 
-  objetosBusqueda = data.objectIDs;
+  objetosBusqueda = data.map((objeto) => objeto.objectID);
 
-  paginasConObjetos();
+  await paginasConObjetos();
   paginacion(objetosBusqueda.length);
 }
 
@@ -64,10 +63,23 @@ async function paginasConObjetos() {
     paginaActual * 20
   );
 
-  for (const id of idsObjetos) {
-    const responseObjeto = await fetch(`${API_base}/objects/${id}`);
-    const objeto = await responseObjeto.json();
+  const objetos = [];
 
+  await Promise.all(
+    idsObjetos.map(async (id) => {
+      try {
+        const responseObjeto = await fetch(`/objects/${id}`);
+        const objeto = await responseObjeto.json();
+        if (objeto.primaryImage) {
+          objetos.push(objeto);
+        }
+      } catch (error) {
+        console.error(`Error al obtener objeto con ID: ${id}`);
+      }
+    })
+  );
+
+  objetos.forEach((objeto) => {
     const div = document.createElement(`div`);
     div.classList.add("resultados_contenedor");
 
@@ -81,18 +93,19 @@ async function paginasConObjetos() {
       h3.textContent = objeto.title;
 
       const p1 = document.createElement("p");
-      p1.textContent = objeto.culture || "Informacion No disponible";
+      p1.textContent = objeto.culture || "Informacion No disponible Script";
 
       const p2 = document.createElement("p");
-      p2.textContent = objeto.dynasty || "Informacion No disponible";
+      p2.textContent = objeto.dynasty || "Informacion No disponible Script";
 
       div.appendChild(img);
       div.appendChild(h3);
       div.appendChild(p1);
       div.appendChild(p2);
     }
+
     resultado.appendChild(div);
-  }
+  });
 }
 
 function paginacion(objetosTotales) {
@@ -103,11 +116,12 @@ function paginacion(objetosTotales) {
   for (let i = 1; i <= paginasTotales; i++) {
     const boton = document.createElement("button");
     boton.textContent = i;
-    boton.disable = i === paginaActual;
+    boton.disabled = i === paginaActual;
 
     boton.addEventListener("click", async () => {
       paginaActual = i;
-      paginasConObjetos();
+      await paginasConObjetos();
+      paginacion(objetosTotales);
     });
     botonPaginas.appendChild(boton);
   }

@@ -1,5 +1,9 @@
 const router = require("express").Router();
-const { obtenerDepartamentos, buscarObjetos } = require(`../consultasApi`);
+const {
+  obtenerDepartamentos,
+  buscarObjetos,
+  buscarObjetosPorId,
+} = require(`../consultasApi`);
 
 router.get(`/departments`, async (req, res) => {
   const departamentos = await obtenerDepartamentos();
@@ -7,10 +11,22 @@ router.get(`/departments`, async (req, res) => {
 });
 
 router.get(`/search`, async (req, res) => {
-  const { dtos, palabra, localizacion, pagina } = req.query;
+  const { q, pagina, departmentId, geoLocation } = req.query;
+  const buscarPalabra = q || "";
 
-  const objetos = await buscarObjetos(dtos, palabra, localizacion, pagina);
+  const objetos = await buscarObjetos(
+    departmentId,
+    buscarPalabra,
+    geoLocation,
+    pagina
+  );
   res.json(objetos);
+});
+
+router.get(`/objects/:id`, async (req, res) => {
+  const objetoId = req.params.id;
+  const objeto = await buscarObjetosPorId(objetoId);
+  res.json(objeto);
 });
 
 module.exports = router;
