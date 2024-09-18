@@ -9,10 +9,11 @@ let paginaActual = 1;
 let ultimaBusquedaUrl = "";
 let objetosBusqueda = [];
 
+//-------------------- SIRVE -------------------------//
 async function obtenerDepartamentos() {
   const response = await fetch(`/departments`);
   const data = await response.json();
-
+  console.log(data);
   data.forEach((departementos) => {
     const option = document.createElement("option");
     option.value = departementos.departmentId;
@@ -93,18 +94,27 @@ async function paginasConObjetos() {
       h3.textContent = objeto.title;
 
       const p1 = document.createElement("p");
-      p1.textContent = objeto.culture || "Informacion No disponible";
+      p1.textContent =
+        "Cultura: " + objeto.culture || "Informacion No disponible";
 
       const p2 = document.createElement("p");
-      p2.textContent = objeto.dynasty || "Informacion No disponible ";
+      p2.textContent =
+        "Dinastia: " + objeto.dynasty || "Informacion No disponible ";
 
-      const link = document.createElement("a");
-      link.href = "view/detalle";
+      const overlay = document.createElement(`div`);
+      overlay.classList.add(`overlay`);
+      overlay.textContent =
+        "Fecha de Creacion: " + objeto.objectDate || "Fecha no disponible ";
+
+      const boton = document.createElement("button");
+      boton.textContent = "Ver mas....";
 
       div.appendChild(img);
       div.appendChild(h3);
       div.appendChild(p1);
       div.appendChild(p2);
+      div.appendChild(boton);
+      div.appendChild(overlay);
     }
 
     resultado.appendChild(div);
@@ -131,4 +141,4 @@ function paginacion(objetosTotales) {
 }
 
 formulario.addEventListener("submit", crearBusqueda);
-window.onload = obtenerDepartamentos;
+window.onload = obtenerDepartamentos();

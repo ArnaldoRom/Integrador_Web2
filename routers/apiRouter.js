@@ -3,8 +3,9 @@ const {
   obtenerDepartamentos,
   buscarObjetos,
   buscarObjetosPorId,
-} = require(`../consultasApi`);
+} = require(`../controllers/consultasApi`);
 
+//---------------------SIRVE ---------------------//
 router.get(`/departments`, async (req, res) => {
   const departamentos = await obtenerDepartamentos();
   res.json(departamentos);

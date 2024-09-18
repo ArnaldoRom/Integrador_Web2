@@ -1,11 +1,11 @@
 const fetch = require("node-fetch");
-const { traducir } = require("./traductor");
+const { traducir } = require("../services/traductor");
 const API_base = `https://collectionapi.metmuseum.org/public/collection/v1`;
 
+// ------------------------ SIRVEEEE  --------------------//
 async function obtenerDepartamentos() {
   const response = await fetch(`${API_base}/departments`);
   const data = await response.json();
-
   return data.departments;
 }
 
