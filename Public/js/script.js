@@ -93,10 +93,13 @@ async function paginasConObjetos() {
       h3.textContent = objeto.title;
 
       const p1 = document.createElement("p");
-      p1.textContent = objeto.culture || "Informacion No disponible Script";
+      p1.textContent = objeto.culture || "Informacion No disponible";
 
       const p2 = document.createElement("p");
-      p2.textContent = objeto.dynasty || "Informacion No disponible Script";
+      p2.textContent = objeto.dynasty || "Informacion No disponible ";
+
+      const link = document.createElement("a");
+      link.href = "view/detalle";
 
       div.appendChild(img);
       div.appendChild(h3);

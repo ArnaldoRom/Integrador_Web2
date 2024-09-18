@@ -24,7 +24,6 @@ async function buscarObjetos(dtos, palabra, localizacion, pagina = 1) {
     }
 
     const idsObjetos = data.objectIDs.slice((pagina - 1) * 20, pagina * 20);
-
     const objetos = [];
 
     await Promise.all(

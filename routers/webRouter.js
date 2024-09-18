@@ -5,7 +5,8 @@ router.get("/", (req, res) => {
 });
 
 router.get("/detalle", (req, res) => {
-  res.render("detalle");
+  const objetdoId = req.query.id;
+  res.render("detalle", { objetdoId });
 });
 
 module.exports = router;

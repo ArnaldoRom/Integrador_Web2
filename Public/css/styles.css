@@ -28,7 +28,7 @@
   align-items: center;
 }
 
-.resultados_contenedor :hover {
+.card :hover {
   transform: scale(1.05);
   background-color: #e0e0e0;
 }
