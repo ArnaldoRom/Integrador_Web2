@@ -30,4 +30,19 @@ router.get(`/objects/:id`, async (req, res) => {
   res.json(objeto);
 });
 
+router.get(`/detalle/:id`, async (req, res) => {
+  const objetoId = req.params.id;
+  try {
+    const objeto = await buscarObjetosPorId(objetoId);
+    if (objeto) {
+      res.render(`detalle`, { objeto }); // Renderiza la vista de detalle con los datos del objeto
+    } else {
+      res.status(404).send("Objeto no encontrado");
+    }
+  } catch (error) {
+    console.error(`Error al obtener el objeto con ID ${objetoId}:`, error);
+    res.status(500).send("Error al cargar la página de detalle");
+  }
+});
+
 module.exports = router;

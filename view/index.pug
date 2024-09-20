@@ -1,12 +1,15 @@
 extends layout
 
 block contenido
-  form(id="formulario")
-    input(type="text", id="texto", placeholder="palabra clave")
-    input(type="text", id="pais", placeholder="localizacion")
-    select(name="departamentos", id="departamentos") 
-      option(value="") Todos los Departamentos 
-    button(type="submit", id="boton") Enviar 
+  h1 MUSEO METROPOLITANO DE NY
+  #spinner(class="spinner" hidden)
+  div(class="form-contenedor")    
+      form(id="formulario")
+        input(type="text", id="texto", placeholder="palabra clave")
+        input(type="text", id="pais", placeholder="localizacion")
+        select(name="departamentos", id="departamentos") 
+          option(value="") Todos los Departamentos 
+        button(type="submit", id="boton") Enviar 
 
   div(id="resultado", class= "card")
   div(id="paginas")

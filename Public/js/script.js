@@ -4,6 +4,7 @@ const resultado = document.getElementById("resultado");
 const palabra = document.getElementById("texto");
 const pais = document.getElementById("pais");
 const botonPaginas = document.getElementById("paginas");
+const spinner = document.getElementById("spinner");
 
 let paginaActual = 1;
 let ultimaBusquedaUrl = "";
@@ -13,7 +14,6 @@ let objetosBusqueda = [];
 async function obtenerDepartamentos() {
   const response = await fetch(`/departments`);
   const data = await response.json();
-  console.log(data);
   data.forEach((departementos) => {
     const option = document.createElement("option");
     option.value = departementos.departmentId;
@@ -37,7 +37,9 @@ async function crearBusqueda(event) {
   ultimaBusquedaUrl = conImg;
   paginaActual = 1;
 
+  mostrarSpinner(true);
   await buscarApi(ultimaBusquedaUrl);
+  mostrarSpinner(false);
 }
 
 async function buscarApi(url) {
@@ -94,26 +96,34 @@ async function paginasConObjetos() {
       h3.textContent = objeto.title;
 
       const p1 = document.createElement("p");
-      p1.textContent =
-        "Cultura: " + objeto.culture || "Informacion No disponible";
+      p1.textContent = `Cultura: ${
+        objeto.culture ? objeto.culture : "Información No disponible"
+      }`;
 
       const p2 = document.createElement("p");
-      p2.textContent =
-        "Dinastia: " + objeto.dynasty || "Informacion No disponible ";
+      p2.textContent = `Dinastia: ${
+        objeto.dynasty ? objeto.dynasty : "Información No disponible"
+      }`;
+
+      const boton = document.createElement("button");
+      boton.textContent = "Ver mas....";
+      boton.classList.add(`boton-detalle`);
 
       const overlay = document.createElement(`div`);
       overlay.classList.add(`overlay`);
       overlay.textContent =
         "Fecha de Creacion: " + objeto.objectDate || "Fecha no disponible ";
+      boton.addEventListener(`click`, () => {
+        console.log("BOTOTOTTOOTNM");
+        window.location.href = `/detalle/${objeto.objectID}`;
+      });
 
-      const boton = document.createElement("button");
-      boton.textContent = "Ver mas....";
+      overlay.appendChild(boton);
 
       div.appendChild(img);
       div.appendChild(h3);
       div.appendChild(p1);
       div.appendChild(p2);
-      div.appendChild(boton);
       div.appendChild(overlay);
     }
 
@@ -138,6 +148,10 @@ function paginacion(objetosTotales) {
     });
     botonPaginas.appendChild(boton);
   }
+}
+
+function mostrarSpinner(mostrar) {
+  spinner.hidden = !mostrar;
 }
 
 formulario.addEventListener("submit", crearBusqueda);

@@ -1,4 +1,23 @@
 extends layout
 
 block contenido
-  h1 ESTO ES EL DETALLE 
+  if objeto
+    h1= objeto.title
+    
+    div
+      img(src=objeto.primaryImage, alt=objeto.title, class="img-extra")
+    
+    div
+      p Cultura: #{objeto.culture || 'No disponible'}
+      p Dinastía: #{objeto.dynasty || 'No disponible'}
+      p Fecha de Creación: #{objeto.objectDate || 'No disponible'}
+    
+    if objeto.additionalImages && objeto.additionalImages.length > 0
+      h3 Imágenes adicionales
+      
+      each img in objeto.additionalImages
+        img(src=img, alt="Imagen adicional", class="img-extra")
+    else
+      p No hay imágenes adicionales disponibles.
+  else
+    p No se encontró el objeto.
