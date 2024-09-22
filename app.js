@@ -20,6 +20,8 @@ app.use(morgan("dev"));
 app.use(apiRouter);
 app.use(webRouter);
 
-app.listen(3000, () => {
-  console.log("Tamo en linea perrro");
-});
+module.exports = app;
+
+// app.listen(3000, () => {
+//   console.log("Tamo en linea perrro");
+// });
