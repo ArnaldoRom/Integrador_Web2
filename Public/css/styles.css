@@ -163,19 +163,23 @@ p {
   margin: 10px;
 }
 
-/* styles.css */
-.spinner {
-  border: 16px solid #f3f3f3; /* Color del fondo del spinner */
-  border-top: 16px solid #3498db; /* Color de la parte superior del spinner */
-  border-radius: 50%;
-  width: 120px;
-  height: 120px;
-  animation: spin 2s linear infinite;
-  margin: auto;
+.spinner-contenedor {
+  display: none;
+  flex-direction: column; /* Apilar el spinner y el texto verticalmente */
+  align-items: center; /* Centrar horizontalmente */
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.spinner {
+  border: 14px solid #f3f3f3; /* Color del fondo del spinner */
+  border-top: 14px solid #3498db; /* Color de la parte superior del spinner */
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  animation: spin 2s linear infinite;
 }
 
 @keyframes spin {
@@ -185,4 +189,8 @@ p {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.spinner-contenedor h3 {
+  color: #3498db;
 }

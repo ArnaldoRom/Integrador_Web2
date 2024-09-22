@@ -4,7 +4,7 @@ const resultado = document.getElementById("resultado");
 const palabra = document.getElementById("texto");
 const pais = document.getElementById("pais");
 const botonPaginas = document.getElementById("paginas");
-const spinner = document.getElementById("spinner");
+const spinner = document.getElementById("spinner-contenedor");
 
 let paginaActual = 1;
 let ultimaBusquedaUrl = "";
@@ -66,6 +66,8 @@ async function construirUrl() {
 }
 
 async function realizarBusqueda() {
+  resultado.innerHTML = "";
+  botonPaginas.innerHTML = "";
   mostrarSpinner(true);
   try {
     const response = await fetch(ultimaBusquedaUrl);
@@ -212,7 +214,11 @@ function actualizarBotonesPaginacion() {
 }
 
 function mostrarSpinner(mostrar) {
-  spinner.hidden = !mostrar;
+  if (mostrar) {
+    spinner.style.display = "flex";
+  } else {
+    spinner.style.display = "none";
+  }
 }
 
 formulario.addEventListener("submit", crearBusqueda);

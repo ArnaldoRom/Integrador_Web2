@@ -2,7 +2,9 @@ extends layout
 
 block contenido
   h1 MUSEO METROPOLITANO DE NY
-  #spinner(class="spinner" hidden)
+  div(id="spinner-contenedor", class="spinner-contenedor" hidden)
+    div(id="spinner", class="spinner")
+    h3 BUSCANDO
   div(class="form-contenedor")    
       form(id="formulario")
         input(type="text", id="texto", placeholder="palabra clave")
