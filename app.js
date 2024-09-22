@@ -1,7 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
-const webRouter = require("routers/webRouter");
+const webRouter = require("./routers/webRouter");
 const apiRouter = require("./routers/apiRouter");
 const app = express();
 const publicDir = path.join(__dirname, "public");
