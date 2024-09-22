@@ -8,7 +8,7 @@ const publicDir = path.join(__dirname, "/public");
 
 app.use(express.static(publicDir));
 
-app.set("views", "./views");
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
 app.get("/detalle", (req, res) => {
