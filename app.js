@@ -9,7 +9,7 @@ const publicDir = path.join(__dirname, "/public");
 app.use(express.static(publicDir));
 
 app.set("views", "./view");
-app.set("view engine", "pug");
+app.set("views engine", "pug");
 
 app.get("/detalle", (req, res) => {
   res.render("detalle", { titulo: "Detalle de Objeto" });
