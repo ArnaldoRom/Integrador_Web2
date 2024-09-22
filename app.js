@@ -6,6 +6,8 @@ const apiRouter = require("./routers/apiRouter");
 const app = express();
 const publicDir = path.join(__dirname, "/public");
 app.use(express.static(publicDir));
+app.use(express.static("public/css"));
+app.use(express.static("public/js"));
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
