@@ -4,17 +4,12 @@ const path = require("path");
 const webRouter = require("./routers/webRouter");
 const apiRouter = require("./routers/apiRouter");
 const app = express();
-const publicDir = path.join(__dirname, "/public");
+const publicDir = path.join(__dirname, "/public/css");
+
 app.use(express.static(publicDir));
-app.use(express.static("public/css"));
-app.use(express.static("public/js"));
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
-
-app.get("/js/script.js", (req, res) => {
-  res.sendFile(path.join(publicDir, "js", "script.js"));
-});
 
 app.get("/detalle", (req, res) => {
   res.render("detalle", { titulo: "Detalle de Objeto" });
