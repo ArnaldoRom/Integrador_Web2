@@ -4,7 +4,7 @@ const path = require("path");
 const webRouter = require("./routers/webRouter");
 const apiRouter = require("./routers/apiRouter");
 const app = express();
-const publicDir = path.join(__dirname, "/public/css");
+const publicDir = path.join(__dirname, "public");
 
 app.use(express.static(publicDir));
 
