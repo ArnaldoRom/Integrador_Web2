@@ -4,9 +4,19 @@ const API_base = `https://collectionapi.metmuseum.org/public/collection/v1`;
 
 // ------------------------ SIRVEEEE  --------------------//
 async function obtenerDepartamentos() {
-  const response = await fetch(`${API_base}/departments`);
-  const data = await response.json();
-  return data.departments;
+  try {
+    const response = await fetch(`${API_base}/departments`);
+    if (!response.ok) {
+      throw new Error(
+        `Error al obtener los departamentos: ${response.statusText}`
+      );
+    }
+    const data = await response.json();
+    return data.departments;
+  } catch (error) {
+    console.error(`Se produjo un error al obtener departamentos: `, error);
+    return [];
+  }
 }
 
 async function buscarObjetos(dtos, palabra, localizacion, pagina = 1) {
@@ -36,13 +46,18 @@ async function buscarObjetos(dtos, palabra, localizacion, pagina = 1) {
 }
 
 async function buscarObjetosPorId(id) {
-  const objeto = await obtenerObjetosPorId(id);
-  if (objeto) {
-    objeto.title = await traducir(objeto.title);
-    objeto.culture = await traducir(objeto.culture);
-    objeto.dynasty = await traducir(objeto.dynasty);
+  try {
+    const objeto = await obtenerObjetosPorId(id);
+    if (objeto) {
+      objeto.title = await traducir(objeto.title);
+      objeto.culture = await traducir(objeto.culture);
+      objeto.dynasty = await traducir(objeto.dynasty);
+    }
+    return objeto;
+  } catch (error) {
+    console.error(`Error al buscar objeto por ID (${id}): `, error);
+    return null;
   }
-  return objeto;
 }
 
 async function obtenerObjetosPorId(id) {
