@@ -10,6 +10,10 @@ app.use(express.static(publicDir));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
+app.get("/js/script.js", (req, res) => {
+  res.sendFile(path.join(publicDir, "js", "script.js"));
+});
+
 app.get("/detalle", (req, res) => {
   res.render("detalle", { titulo: "Detalle de Objeto" });
 });
