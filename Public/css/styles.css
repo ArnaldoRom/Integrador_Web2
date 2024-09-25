@@ -1,181 +1,111 @@
 /*   ------    Principal -------*/
 
-body {
+* {
   margin: 0;
   padding: 0;
-  height: 100vh;
-  background-image: url("../img/Museo_por_fuera.jpg");
-  background-size: cover; /* Cubre toda la página */
-  background-position: center;
-  background-attachment: fixed; /* Imagen de fondo fija */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
+  box-sizing: border-box;
 }
 
-/* -------------- Formulario .---------- */
-.form-contenedor {
-  background-color: rgba(
-    255,
-    255,
-    255,
-    0.8
-  ); /* Fondo blanco semitransparente */
+body {
+  height: 100%;
+  overflow-x: hidden;
+  background-color: #f4f7fc;
+}
+
+.titulo_contenedor {
+  background-color: rgba(0, 0, 0, 0.7);
   padding: 20px;
-  border-radius: 10px; /* Bordes redondeados */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
-  width: 60vh; /* Ancho del contenedor */
-  max-width: 90%; /* Asegura que se adapte a pantallas pequeñas */
+  border-radius: 10px;
+  width: fit-content;
+  margin: 20px auto;
   text-align: center;
 }
 
-#formulario {
+h1 {
+  font-size: 4rem;
+  color: #f0f0f5;
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  margin: 0;
+}
+
+/* -------------- Formulario .---------- */
+.formulario-contenedor {
+  display: flex;
+  background-size: cover;
+  background-image: url("../img/Museo_por_fuera.jpg");
+  background-position: center;
+  flex-direction: column;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  overflow: hidden;
+  justify-content: center;
+  background-attachment: fixed;
+  gap: 20px;
+  height: 100vh;
+  transition: height 0.8s ease;
+}
+
+.form-contenedor {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  width: 60vh;
+  max-width: 90%;
+  text-align: center;
+}
+
+.formulario {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-#formulario input,
-#formulario select,
-#formulario button {
+.formulario input,
+.formulario select,
+.formulario button {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
-  width: 100%; /* Ocupa todo el ancho disponible */
 }
 
-#boton {
+.boton {
   background-color: #87cefa;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-#boton:hover {
-  background-color: #00bfff; /* Cambio de color al pasar el mouse */
+.boton:hover {
+  background-color: #00bfff;
 }
 
-/* -------------- Card ------------------*/
-.card {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(5, auto);
-  gap: 10px;
-  padding: 20px;
+.resultados_contenedor,
+.paginas {
+  display: none;
 }
 
-.img {
-  width: 150px;
-  height: 150px;
-  transition: none;
-}
-
-.resultados_contenedor {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: center;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  border-radius: 5px;
-  width: 250px;
-  height: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.3s, backgroud-color 0.3s;
-}
-
-.resultados_contenedor :hover {
-  transform: scale(1.05);
-}
-
-/* -------------- Overlay --------------*/
-.overlay {
-  position: absolute;
-  z-index: 2;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.8
-  ); /* Color del overlay (semi-transparente) */
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
-  opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: auto; /* Para que el hover no interfiera */
-}
-
-.resultados_contenedor:hover .overlay {
-  opacity: 1;
-}
-
-.resultados_contenedor img,
-h3,
-p {
-  transition: none;
-}
-
-/* ------------------- boton detalle --------------------------*/
-.boton-detalle {
-  position: relative;
-  z-index: 45;
-  background-color: #87cefa; /* Color celeste */
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  font-size: 14px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 150px; /* Espacio para que el botón quede abajo */
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.resultados_contenedor:hover .boton-detalle {
-  opacity: 1; /* Mostrar el botón al hacer hover */
-}
-
-.boton-detalle:hover {
-  background-color: #00bfff; /* Cambio de color al pasar el mouse sobre el botón */
-}
-
-/* Imagen principal y adicionales */
-.img-extra {
-  width: 150px;
-  height: 150px;
-  margin: 10px;
-}
+/*------------- SPINNER ---------------------*/
 
 .spinner-contenedor {
   display: none;
-  flex-direction: column; /* Apilar el spinner y el texto verticalmente */
-  align-items: center; /* Centrar horizontalmente */
   position: absolute;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 350px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 100;
 }
 
 .spinner {
-  border: 14px solid #f3f3f3; /* Color del fondo del spinner */
-  border-top: 14px solid #3498db; /* Color de la parte superior del spinner */
+  border: 14px solid #e0e0e0;
+  border-top: 14px solid #3498db;
   border-radius: 50%;
   width: 70px;
   height: 70px;
@@ -193,4 +123,216 @@ p {
 
 .spinner-contenedor h3 {
   color: #3498db;
+  margin-top: 15px;
+  font-size: 18px;
+}
+
+/* -------------- Card ------------------*/
+.resultados_contenedor {
+  position: relative;
+  background-color: #f4f7fc;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, auto);
+  gap: 10px;
+  padding: 50px 40px;
+  justify-items: center;
+}
+
+.img {
+  width: 150px;
+  height: 150px;
+  transition: none;
+}
+
+.card {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 4px solid #704e05;
+  padding: 20px;
+  margin: 10px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  border-radius: 5px;
+  width: 250px;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra */
+}
+
+.card h3 {
+  margin-bottom: 25px;
+  font-size: 1.2em;
+}
+
+.card p {
+  padding: 5px 0;
+  font-size: 1em;
+}
+/* -------------- Overlay --------------*/
+.overlay {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: auto;
+}
+
+.card:hover .overlay {
+  opacity: 1;
+}
+
+/* ------------------- boton detalle -----------*/
+.boton-detalle {
+  position: relative;
+  z-index: 45;
+  background-color: #87cefa;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 150px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.card:hover .boton-detalle {
+  opacity: 1;
+}
+
+.boton-detalle:hover {
+  background-color: #00bfff;
+}
+
+/* Imagen principal y adicionales */
+.img-extra {
+  width: 150px;
+  height: 150px;
+  margin: 10px;
+}
+
+/*--------- Paginas ------------------*/
+
+.paginas {
+  background-color: #f4f7fc;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.paginas button {
+  padding: 10px 20px;
+  background-color: #87cefa;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.paginas button:hover {
+  background-color: #00bfff;
+}
+
+button.active {
+  background-color: #00bfff;
+  color: white;
+  border: 2px solid #005f99;
+}
+
+/*--------- PAGINA DETALLE----------------*/
+
+#detalles {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.pizarron {
+  width: 90vw;
+  background-color: #f4f7fc;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  margin: 20px auto;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Estilo para las imágenes adicionales */
+.img-extra {
+  width: 150px;
+  height: auto;
+  border-radius: 5px;
+  margin: 10px;
+}
+
+/* Estilo para el título */
+h2 {
+  text-align: center;
+  color: #333;
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.detalle_contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.detail-img {
+  display: block; /* Asegurarse de que sea un bloque */
+  margin: 0 auto; /* Centrar la imagen */
+}
+
+/* Estilos para los detalles del objeto */
+.detail-info {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.1em; /* Tamaño de texto */
+  color: #555; /* Color del texto */
+}
+
+.detail-info p {
+  margin: 5px 0;
+}
+
+/* Estilo para el botón */
+.boton-volver {
+  display: block;
+  margin: 20px auto; /* Centrar el botón */
+  padding: 10px 20px; /* Espaciado interno */
+  background-color: #007bff; /* Color de fondo */
+  color: white; /* Color del texto */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer; /* Cambiar cursor */
+  font-size: 16px; /* Tamaño*/
+}
+
+.boton-volver:hover {
+  background-color: #00bfff;
 }

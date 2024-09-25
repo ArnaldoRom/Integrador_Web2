@@ -1,17 +1,18 @@
 extends layout
 
 block contenido
-  h1 MUSEO METROPOLITANO DE NY
-  div(id="spinner-contenedor", class="spinner-contenedor" hidden)
-    div(id="spinner", class="spinner")
-    h3 BUSCANDO
-  div(class="form-contenedor")    
-      form(id="formulario")
+  div(id="formulario-contenedor", class="formulario-contenedor")  
+    div(class="titulo_contenedor")
+      h1 MUSEO METROPOLITANO DE NUEVA YORK 
+    div(class="form-contenedor")    
+      form(id="formulario", class="formulario")
         input(type="text", id="texto", placeholder="palabra clave")
         input(type="text", id="pais", placeholder="localizacion")
         select(name="departamentos", id="departamentos") 
           option(value="") Todos los Departamentos 
-        button(type="submit", id="boton") Enviar 
-
-  div(id="resultado", class= "card")
-  div(id="paginas")
+        button(type="submit", id="boton", class="boton") Enviar  
+  div(id="spinner-contenedor", class="spinner-contenedor")
+    div(id="spinner", class="spinner")
+    h3 BUSCANDO      
+  div(id="resultado", class= "resultados_contenedor")  
+  div(id="paginas", class="paginas")

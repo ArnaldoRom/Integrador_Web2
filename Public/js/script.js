@@ -4,6 +4,7 @@ const resultado = document.getElementById("resultado");
 const palabra = document.getElementById("texto");
 const pais = document.getElementById("pais");
 const botonPaginas = document.getElementById("paginas");
+const contenedor = document.getElementById("formulario-contenedor");
 const spinner = document.getElementById("spinner-contenedor");
 
 let paginaActual = 1;
@@ -36,6 +37,12 @@ async function obtenerDepartamentos() {
 
 async function crearBusqueda(event) {
   event.preventDefault();
+  mostrarSpinner(true);
+
+  contenedor.style.height = "80vh";
+  resultado.style.display = "grid";
+  botonPaginas.style.display = "flex";
+
   try {
     paginaActual = 1;
     ultimaBusquedaUrl = await construirUrl();
@@ -68,7 +75,7 @@ async function construirUrl() {
 async function realizarBusqueda() {
   resultado.innerHTML = "";
   botonPaginas.innerHTML = "";
-  mostrarSpinner(true);
+
   try {
     const response = await fetch(ultimaBusquedaUrl);
     if (!response.ok) {
@@ -130,7 +137,7 @@ function crearCard(objeto) {
     if (!objeto.primaryImage) return;
 
     const div = document.createElement(`div`);
-    div.classList.add("resultados_contenedor");
+    div.classList.add("card");
 
     const img = document.createElement(`img`);
     img.src = objeto.primaryImage;
@@ -150,22 +157,25 @@ function crearCard(objeto) {
       objeto.dynasty || "Información No disponible"
     }`;
 
-    const boton = document.createElement("button");
-    boton.textContent = "Ver mas....";
-    boton.classList.add(`boton-detalle`);
-    boton.addEventListener(`click`, () => {
-      window.location.href = `/detalle/${objeto.objectID}`; // PROBARR SIN EL WINDOWS
-    });
-
     const overlay = document.createElement(`div`);
     overlay.classList.add(`overlay`);
     overlay.textContent = `Fecha de Creacion: ${
       objeto.objectDate || "Fecha no disponible "
     }`;
 
-    overlay.appendChild(boton);
-    div.appendChild(img);
+    if (objeto.additionalImages && objeto.additionalImages.length > 0) {
+      const boton = document.createElement("button");
+      boton.textContent = "Ver mas....";
+      boton.classList.add(`boton-detalle`);
+      boton.addEventListener(`click`, () => {
+        window.location.href = `/detalle/${objeto.objectID}`;
+      });
+
+      overlay.appendChild(boton);
+    }
+
     div.appendChild(h3);
+    div.appendChild(img);
     div.appendChild(p1);
     div.appendChild(p2);
     div.appendChild(overlay);
@@ -187,6 +197,10 @@ function paginacion(objetosTotales) {
       boton.textContent = i;
       boton.disabled = i === paginaActual;
 
+      if (i === paginaActual) {
+        boton.classList.add("active");
+      }
+
       boton.addEventListener("click", () => {
         paginaActual = i;
         mostrarResultados(i);
@@ -206,6 +220,12 @@ function actualizarBotonesPaginacion() {
     const botones = botonPaginas.querySelectorAll("button");
     botones.forEach((boton, index) => {
       boton.disabled = index + 1 === paginaActual;
+
+      if (index + 1 === paginaActual) {
+        boton.classList.add("active");
+      } else {
+        boton.classList.remove("active");
+      }
     });
   } catch (error) {
     console.error("Error al actualizar los botones de paginación:", error);
@@ -220,6 +240,5 @@ function mostrarSpinner(mostrar) {
     spinner.style.display = "none";
   }
 }
-
 formulario.addEventListener("submit", crearBusqueda);
 window.onload = obtenerDepartamentos;

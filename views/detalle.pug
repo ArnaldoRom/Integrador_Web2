@@ -2,22 +2,22 @@ extends layout
 
 block contenido
   if objeto
-    h1= objeto.title
-    
-    div
-      img(src=objeto.primaryImage, alt=objeto.title, class="img-extra")
-    
-    div
-      p Cultura: #{objeto.culture || 'No disponible'}
-      p Dinastía: #{objeto.dynasty || 'No disponible'}
-      p Fecha de Creación: #{objeto.objectDate || 'No disponible'}
+    h2= objeto.title
     
     if objeto.additionalImages && objeto.additionalImages.length > 0
-      h3 Imágenes adicionales
-      
-      each img in objeto.additionalImages
-        img(src=img, alt="Imagen adicional", class="img-extra")
+      div.pizarron
+        each img in objeto.additionalImages
+          img(src=img, alt="Imagen adicional", class="img-extra")
     else
-      p No hay imágenes adicionales disponibles.
+      p No hay imágenes adicionales disponibles.    
+    div(class="detalle_contenedor")
+      div
+        img(src=objeto.primaryImage, alt=objeto.title, class="img-extra")
+
+      div.detail-info
+        p Cultura: #{objeto.culture || 'No disponible'}
+        p Dinastía: #{objeto.dynasty || 'No disponible'}
+        p Fecha de Creación: #{objeto.objectDate || 'No disponible'}    
+      button(onclick="window.history.back()", class="boton-volver") Volver    
   else
     p No se encontró el objeto.
