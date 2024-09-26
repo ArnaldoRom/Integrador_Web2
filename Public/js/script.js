@@ -1,17 +1,21 @@
+//------------------------- ELEMENTOS DEL DOOM -----------------------------//
 const formulario = document.getElementById("formulario");
 const lista = document.getElementById("departamentos");
 const resultado = document.getElementById("resultado");
+const noResultado = document.getElementById("no_encontrado");
 const palabra = document.getElementById("texto");
 const pais = document.getElementById("pais");
 const botonPaginas = document.getElementById("paginas");
 const contenedor = document.getElementById("formulario-contenedor");
 const spinner = document.getElementById("spinner-contenedor");
 
+// Variables para el manejo de paginación y almacenamiento de resultados.
 let paginaActual = 1;
 let ultimaBusquedaUrl = "";
 let objetosBusqueda = [];
 let objetosPorPagina = [];
 
+// Función para obtener los departamentos disponibles de la API.
 async function obtenerDepartamentos() {
   try {
     const response = await fetch(`/departments`);
@@ -35,6 +39,7 @@ async function obtenerDepartamentos() {
   }
 }
 
+// Función para manejar la búsqueda cuando se envía el formulario.
 async function crearBusqueda(event) {
   event.preventDefault();
   mostrarSpinner(true);
@@ -53,6 +58,7 @@ async function crearBusqueda(event) {
   }
 }
 
+// Función para construir la URL de búsqueda basándose en los inputs del usuario.
 async function construirUrl() {
   try {
     const texto = palabra.value.trim();
@@ -72,9 +78,11 @@ async function construirUrl() {
   }
 }
 
+// Función para realizar la búsqueda y manejar los resultados.
 async function realizarBusqueda() {
   resultado.innerHTML = "";
   botonPaginas.innerHTML = "";
+  noResultado.style.display = "none";
 
   try {
     const response = await fetch(ultimaBusquedaUrl);
@@ -83,8 +91,13 @@ async function realizarBusqueda() {
     }
     const data = await response.json();
 
-    if (!data.objetos || data.length === 0) {
-      resultado.innerHTML = "<p>No se encontraron resultados.</p>";
+    if (!data.objetos || data.objetos.length === 0) {
+      noResultado.innerHTML = "";
+      const msj = document.createElement("p");
+      msj.textContent = "No se encontraron resultados.";
+      noResultado.classList.add("mensaje_error");
+      noResultado.style.display = "block";
+      noResultado.appendChild(msj);
       botonPaginas.innerHTML = "";
       mostrarSpinner(false);
       return;
@@ -109,6 +122,7 @@ async function realizarBusqueda() {
   }
 }
 
+// Función para mostrar los resultados en la interfaz.
 async function mostrarResultados(idsObjetos) {
   resultado.innerHTML = "";
   const paginaObjetos = objetosPorPagina[idsObjetos] || [];
@@ -118,6 +132,7 @@ async function mostrarResultados(idsObjetos) {
   });
 }
 
+// Función para obtener los detalles de un objeto específico por ID.
 async function obtenerObjetos(id) {
   try {
     const response = await fetch(`/objects/${id}`);
@@ -132,6 +147,7 @@ async function obtenerObjetos(id) {
   }
 }
 
+// Función para crear y mostrar una tarjeta de un objeto.
 function crearCard(objeto) {
   try {
     if (!objeto.primaryImage) return;
@@ -187,6 +203,7 @@ function crearCard(objeto) {
   }
 }
 
+// Función para manejar la paginación de los resultados.
 function paginacion(objetosTotales) {
   try {
     botonPaginas.innerHTML = "";
@@ -215,6 +232,7 @@ function paginacion(objetosTotales) {
   }
 }
 
+// Función para cambiar a una página específica.
 function actualizarBotonesPaginacion() {
   try {
     const botones = botonPaginas.querySelectorAll("button");
@@ -233,6 +251,7 @@ function actualizarBotonesPaginacion() {
   }
 }
 
+// Función para mostrar u ocultar el spinner de carga.
 function mostrarSpinner(mostrar) {
   if (mostrar) {
     spinner.style.display = "flex";
@@ -240,5 +259,7 @@ function mostrarSpinner(mostrar) {
     spinner.style.display = "none";
   }
 }
+
+// Al cargar la página, se obtienen los departamentos.
 formulario.addEventListener("submit", crearBusqueda);
 window.onload = obtenerDepartamentos;

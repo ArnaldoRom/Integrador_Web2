@@ -56,7 +56,7 @@ try {
         const additionalImg = document.createElement("img");
         additionalImg.src = imgUrl;
         additionalImg.alt = `${objeto.title} - Imagen adicional`;
-        additionalImg.classList.add("img-ectra");
+        additionalImg.classList.add("img-extra");
         additionalImagesDiv.appendChild(additionalImg);
       });
 

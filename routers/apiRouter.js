@@ -5,7 +5,8 @@ const {
   buscarObjetosPorId,
 } = require(`../controllers/consultasApi`);
 
-//---------------------SIRVE ---------------------//
+//-------------RUTA PARA OBTENER LOS DEPARTAMENTOS ---------------//
+/* Cuando se realiza la peticion GET a /departments, se llama a la funcion obtenerDepartamentos() el cual recupera la data que despues se envia en formato JSON a quien lo requiera */
 router.get(`/departments`, async (req, res) => {
   try {
     const departamentos = await obtenerDepartamentos();
@@ -15,6 +16,8 @@ router.get(`/departments`, async (req, res) => {
   }
 });
 
+//-------------RUTA PARA BUSCAR LOS OBJETOS ------------------------//
+/* Cuando se realiza la peticion  GET a /search con parametros  de consulta , se llama a la funcion buscarObjetos() el cual recupera dependiendo del parametro que se le envia la data que  se retorna en formato JSON a quien lo requiera*/
 router.get(`/search`, async (req, res) => {
   const { q, pagina, departmentId, geoLocation } = req.query;
   const buscarPalabra = q || "";
@@ -32,6 +35,8 @@ router.get(`/search`, async (req, res) => {
   }
 });
 
+//-------------RUTA PARA OBTENER OBJETOS POR ID---------------------//
+/* Cuando se realiza la peticion GET a /objects/:id , se extrae el ID del objeto de los parámetros de la ruta. Luego se llama a la función buscarObjetosPorId() y se envía el objeto como respuesta en formato JSON.*/
 router.get(`/objects/:id`, async (req, res) => {
   const objetoId = req.params.id;
   try {
@@ -42,6 +47,8 @@ router.get(`/objects/:id`, async (req, res) => {
   }
 });
 
+//-------------RUTA PARA RENDERIZAR LA VISTA DETALLE -----------------//
+/* Cuando se realiza la peticion GET a /detalle/:id  se extrae el ID del objeto de los parametros de ruta . Luego se llama a la funcion buscarObjetosPorId() y si se encuentra el objeto se renderiza la vista detalle.*/
 router.get(`/detalle/:id`, async (req, res) => {
   const objetoId = req.params.id;
   try {

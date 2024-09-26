@@ -1,4 +1,4 @@
-/*   ------    Principal -------*/
+/*   ------    PRINCIPAL-------*/
 
 * {
   margin: 0;
@@ -30,7 +30,14 @@ h1 {
   margin: 0;
 }
 
-/* -------------- Formulario .---------- */
+.resultados_contenedor,
+.paginas,
+.mensaje_error {
+  display: none;
+}
+
+/* -------------- FORMULARIO ---------- */
+
 .formulario-contenedor {
   display: flex;
   background-size: cover;
@@ -84,9 +91,20 @@ h1 {
   background-color: #00bfff;
 }
 
-.resultados_contenedor,
-.paginas {
-  display: none;
+/*------------ MENSAJE DE ERROR --------------*/
+
+.mensaje_error {
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-top: 30px;
+  font-size: 1.5rem;
+  color: #e67e22;
+  background-color: #fbeee0;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /*------------- SPINNER ---------------------*/
@@ -127,7 +145,8 @@ h1 {
   font-size: 18px;
 }
 
-/* -------------- Card ------------------*/
+/* -------------- CARDS ------------------*/
+
 .resultados_contenedor {
   position: relative;
   background-color: #f4f7fc;
@@ -161,7 +180,7 @@ h1 {
   align-items: center;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .card h3 {
@@ -173,7 +192,8 @@ h1 {
   padding: 5px 0;
   font-size: 1em;
 }
-/* -------------- Overlay --------------*/
+/* -------------- OVERLAY  --------------*/
+
 .overlay {
   position: absolute;
   z-index: 2;
@@ -198,7 +218,7 @@ h1 {
   opacity: 1;
 }
 
-/* ------------------- boton detalle -----------*/
+/* ------------- BOTON DETALLE -----------*/
 .boton-detalle {
   position: relative;
   z-index: 45;
@@ -222,14 +242,7 @@ h1 {
   background-color: #00bfff;
 }
 
-/* Imagen principal y adicionales */
-.img-extra {
-  width: 150px;
-  height: 150px;
-  margin: 10px;
-}
-
-/*--------- Paginas ------------------*/
+/*--------- PAGINAS -----------------*/
 
 .paginas {
   background-color: #f4f7fc;
@@ -272,6 +285,7 @@ button.active {
   width: 90vw;
   background-color: #f4f7fc;
   border-radius: 8px;
+  border: 4px solid #704e05;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   margin: 20px auto;
   padding: 10px;
@@ -280,7 +294,6 @@ button.active {
   justify-content: center;
 }
 
-/* Estilo para las imágenes adicionales */
 .img-extra {
   width: 150px;
   height: auto;
@@ -288,7 +301,6 @@ button.active {
   margin: 10px;
 }
 
-/* Estilo para el título */
 h2 {
   text-align: center;
   color: #333;
@@ -304,23 +316,22 @@ h2 {
 }
 
 .detail-img {
-  display: block; /* Asegurarse de que sea un bloque */
-  margin: 0 auto; /* Centrar la imagen */
+  display: block;
+  margin: 0 auto;
 }
 
-/* Estilos para los detalles del objeto */
 .detail-info {
   text-align: center;
   margin-top: 20px;
-  font-size: 1.1em; /* Tamaño de texto */
-  color: #555; /* Color del texto */
+  font-size: 1.1em;
+  color: #555;
 }
 
 .detail-info p {
   margin: 5px 0;
 }
 
-/* Estilo para el botón */
+/*------------ BOTON VOLVER __________________ */
 .boton-volver {
   display: block;
   margin: 20px auto; /* Centrar el botón */
