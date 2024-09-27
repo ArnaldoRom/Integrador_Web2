@@ -23,7 +23,7 @@ async function obtenerDepartamentos() {
 //---------------- FUNCION PARA BUSCAR OBJETOS  -----------------------//
 /* Se solicita a la API los datos de los objetos que se decean obtener . Filtrados ya sea por Departamento , Palabra Clave o Localizacion. */
 async function buscarObjetos(dtos, palabra, localizacion, pagina = 1) {
-  let urlBusqueda = `${API_base}/search?q=${palabra || ""}&hasImages=true`;
+  let urlBusqueda = `${API_base}/search?hasImages=true&q=${palabra || ""}`;
 
   if (dtos) urlBusqueda += `&departmentId=${dtos}`;
   if (localizacion) urlBusqueda += `&geoLocation=${localizacion}`;

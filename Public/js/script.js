@@ -150,13 +150,13 @@ async function obtenerObjetos(id) {
 // Función para crear y mostrar una tarjeta de un objeto.
 function crearCard(objeto) {
   try {
-    if (!objeto.primaryImage) return;
+    if (!objeto.primaryImage && objeto.title == "") return;
 
     const div = document.createElement(`div`);
     div.classList.add("card");
 
     const img = document.createElement(`img`);
-    img.src = objeto.primaryImage;
+    img.src = objeto.primaryImage || `https://via.placeholder.com/150`;
     img.alt = objeto.title;
     img.classList.add("img");
 
@@ -207,6 +207,7 @@ function crearCard(objeto) {
 function paginacion(objetosTotales) {
   try {
     botonPaginas.innerHTML = "";
+
     const paginasTotales = Math.ceil(objetosTotales / 20);
 
     for (let i = 1; i <= paginasTotales; i++) {
