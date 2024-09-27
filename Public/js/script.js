@@ -63,7 +63,7 @@ async function construirUrl() {
   try {
     const texto = palabra.value.trim();
     const localizacion = pais.value.trim();
-    let url = `/search?q=${texto || ""}&hasImages=true`;
+    let url = `/search?hasImages=true&q=${texto || ""}`;
 
     if (lista.value) url += `&departmentId=${lista.value}`;
     if (localizacion) url += `&geoLocation=${localizacion}`;
@@ -113,7 +113,7 @@ async function realizarBusqueda() {
     }
 
     await mostrarResultados(paginaActual);
-    paginacion(data.total);
+    paginacion(objetosBusqueda.length);
   } catch (error) {
     console.error(`Error al realizar la busqueda: `, error);
     alert("Error al realizar la busqueda. Vuelva a intentar");
@@ -156,7 +156,7 @@ function crearCard(objeto) {
     div.classList.add("card");
 
     const img = document.createElement(`img`);
-    img.src = objeto.primaryImage || `https://via.placeholder.com/150`;
+    img.src = objeto.primaryImage || `../img/error_imagen.png`;
     img.alt = objeto.title;
     img.classList.add("img");
 

@@ -21,7 +21,7 @@ async function obtenerDepartamentos() {
 }
 
 //---------------- FUNCION PARA BUSCAR OBJETOS  -----------------------//
-/* Se solicita a la API los datos de los objetos que se decean obtener . Filtrados ya sea por Departamento , Palabra Clave o Localizacion. */
+/* Se solicita a la API los datos de los objetos que se decean obtener . Filtrados ya sea por Departamento , Palabra Clave o Localizacion. Se limito la cantidad de objetos a traer puesto que en algunas solicitudes eran muchos y el servidor se ponia lento asi que se limito a 200 objetos*/
 async function buscarObjetos(dtos, palabra, localizacion, pagina = 1) {
   let urlBusqueda = `${API_base}/search?hasImages=true&q=${palabra || ""}`;
 
@@ -36,9 +36,11 @@ async function buscarObjetos(dtos, palabra, localizacion, pagina = 1) {
       return { total: 0, objetos: [] };
     }
 
-    const total = data.objectIDs.length;
+    const total = Math.min(data.objectIDs.length, 200); // Se limito el total de los objetos
+    const totalObjetos = data.objectIDs.slice(0, 200); // se limita a 200 objetos la busqueda
+
     const objetos = await Promise.all(
-      data.objectIDs.map(async (id) => obtenerObjetosPorId(id))
+      totalObjetos.map(async (id) => obtenerObjetosPorId(id))
     );
 
     return { total: total, objetos: objetos.filter((obj) => obj !== null) };
